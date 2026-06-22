@@ -64,6 +64,8 @@ your-agent/skills/feishu-bitale/SKILL.md
 
 ### 步骤四：配置表格信息
 
+**⚠️ 请替换为你自己的表格信息：**
+
 在 SKILL.md 中修改你的表格信息：
 
 ```markdown
@@ -141,22 +143,14 @@ lark-cli base +record-delete \
 https://xxx.feishu.cn/base/BASE_TOKEN?table=TABLE_ID
 ```
 
-例如：
-```
-https://rcnenuc42s80.feishu.cn/base/Gbe2bURz0aBuzWsv6vicM1NpnEg?table=tbl9RolVlj1k5fwl
-```
-
-| 字段 | 值 |
-|------|-----|
-| Base Token | `Gbe2bURz0aBuzWsv6vicM1NpnEg` |
-| Table ID | `tbl9RolVlj1k5fwl` |
+**⚠️ 请替换为你自己的 Base Token 和 Table ID**
 
 ### 获取 Record ID
 
 使用列表命令，输出的第一列 `_record_id` 即为记录 ID：
 
 ```
-lark-cli base +record-list --base-token XXX --table-id XXX
+lark-cli base +record-list --base-token YOUR_BASE_TOKEN --table-id YOUR_TABLE_ID
 ```
 
 输出格式：
@@ -262,6 +256,14 @@ Agent 更新表格（状态=已完成，预览图URL=xxx）
 
 ---
 
+## ⚠️ 安全提示
+
+- **Base Token 和 Table ID** 是访问你飞书表格的凭证
+- **请勿将你的真实 Token 分享给他人**
+- 公开仓库中只使用占位符（如 `YOUR_BASE_TOKEN`）
+
+---
+
 ## 常见问题
 
 ### Q: 授权过期怎么办？
@@ -311,3 +313,4 @@ MIT License - 可自由使用于商业和非商业项目。
 - 初始版本
 - 支持基础的 CRUD 操作
 - 提供完整的安装教程
+- ⚠️ 修复：移除真实凭证，使用占位符

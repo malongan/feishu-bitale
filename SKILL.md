@@ -9,37 +9,47 @@ description: "飞书多维表格控制 - 读取、新增、更新、删除飞书
 
 ## 环境
 
-- lark-cli 路径：`/opt/homebrew/lib/node_modules/@larksuite/cli/bin/lark-cli`
-- 授权状态：已通过 Device Flow 授权
+- lark-cli 安装：
+  ```bash
+  npm install -g @larksuite/cli
+  ```
+- 授权：
+  ```bash
+  lark-cli auth login
+  ```
 
 ## 固定表格信息
 
+**⚠️ 请替换为你自己的表格信息：**
+
+```markdown
 | 表格 | Base Token | Table ID |
 |------|------------|----------|
-| 设计任务管理 | `Gbe2bURz0aBuzWsv6vicM1NpnEg` | `tbl9RolVlj1k5fwl` |
+| 你的表格 | YOUR_BASE_TOKEN | YOUR_TABLE_ID |
+```
 
 ## 🔧 常用命令
 
 ### 1. 列出所有记录
 ```bash
-/opt/homebrew/lib/node_modules/@larksuite/cli/bin/lark-cli base +record-list \
-  --base-token Gbe2bURz0aBuzWsv6vicM1NpnEg \
-  --table-id tbl9RolVlj1k5fwl
+lark-cli base +record-list \
+  --base-token YOUR_BASE_TOKEN \
+  --table-id YOUR_TABLE_ID
 ```
 
 ### 2. 筛选待处理任务
 ```bash
-/opt/homebrew/lib/node_modules/@larksuite/cli/bin/lark-cli base +record-list \
-  --base-token Gbe2bURz0aBuzWsv6vicM1NpnEg \
-  --table-id tbl9RolVlj1k5fwl \
+lark-cli base +record-list \
+  --base-token YOUR_BASE_TOKEN \
+  --table-id YOUR_TABLE_ID \
   --filter "状态 = 待处理"
 ```
 
 ### 3. 新增记录
 ```bash
-/opt/homebrew/lib/node_modules/@larksuite/cli/bin/lark-cli base +record-create \
-  --base-token Gbe2bURz0aBuzWsv6vicM1NpnEg \
-  --table-id tbl9RolVlj1k5fwl \
+lark-cli base +record-create \
+  --base-token YOUR_BASE_TOKEN \
+  --table-id YOUR_TABLE_ID \
   --data '{
     "任务名称": "任务名称",
     "IP角色": "芒果仔",
@@ -56,9 +66,9 @@ description: "飞书多维表格控制 - 读取、新增、更新、删除飞书
 
 ### 4. 更新记录
 ```bash
-/opt/homebrew/lib/node_modules/@larksuite/cli/bin/lark-cli base +record-update \
-  --base-token Gbe2bURz0aBuzWsv6vicM1NpnEg \
-  --table-id tbl9RolVlj1k5fwl \
+lark-cli base +record-update \
+  --base-token YOUR_BASE_TOKEN \
+  --table-id YOUR_TABLE_ID \
   --record-id <RECORD_ID> \
   --data '{
     "状态": "已完成",
@@ -70,17 +80,17 @@ description: "飞书多维表格控制 - 读取、新增、更新、删除飞书
 
 ### 5. 删除记录
 ```bash
-/opt/homebrew/lib/node_modules/@larksuite/cli/bin/lark-cli base +record-delete \
-  --base-token Gbe2bURz0aBuzWsv6vicM1NpnEg \
-  --table-id tbl9RolVlj1k5fwl \
+lark-cli base +record-delete \
+  --base-token YOUR_BASE_TOKEN \
+  --table-id YOUR_TABLE_ID \
   --record-id <RECORD_ID>
 ```
 
 ### 6. 获取表结构（字段ID）
 ```bash
-/opt/homebrew/lib/node_modules/@larksuite/cli/bin/lark-cli base table-info \
-  --base-token Gbe2bURz0aBuzWsv6vicM1NpnEg \
-  --table-id tbl9RolVlj1k5fwl
+lark-cli base table-info \
+  --base-token YOUR_BASE_TOKEN \
+  --table-id YOUR_TABLE_ID
 ```
 
 ## 📊 字段类型说明
@@ -97,53 +107,51 @@ description: "飞书多维表格控制 - 读取、新增、更新、删除飞书
 ### 读取并处理待处理任务
 ```bash
 # 1. 读取待处理任务
-TASKS=$(/opt/homebrew/lib/node_modules/@larksuite/cli/bin/lark-cli base +record-list \
-  --base-token Gbe2bURz0aBuzWsv6vicM1NpnEg \
-  --table-id tbl9RolVlj1k5fwl \
-  --filter "状态 = 待处理" \
-  --format json)
+lark-cli base +record-list \
+  --base-token YOUR_BASE_TOKEN \
+  --table-id YOUR_TABLE_ID \
+  --filter "状态 = 待处理"
 
 # 2. 解析任务数据（需要用 jq 或 python 解析）
-echo "$TASKS" | python3 -c "import sys,json; ..."
 ```
 
 ### 完成任务后更新表格
 ```bash
-/opt/homebrew/lib/node_modules/@larksuite/cli/bin/lark-cli base +record-update \
-  --base-token Gbe2bURz0aBuzWsv6vicM1NpnEg \
-  --table-id tbl9RolVlj1k5fwl \
+lark-cli base +record-update \
+  --base-token YOUR_BASE_TOKEN \
+  --table-id YOUR_TABLE_ID \
   --record-id <RECORD_ID> \
   --data '{
     "状态": "已完成",
-    "预览图URL": "https://malongan.github.io/images/xxx.png",
+    "预览图URL": "https://xxx.png",
     "完成时间": "2026-06-22"
   }'
 ```
 
 ## ⚠️ 注意事项
 
-1. **Record ID 获取**：列表命令输出的第一条记录的 ID 字段
-2. **中文编码**：确保 --data 参数中的中文正确传递
-3. **JSON 格式**：复杂数据用 JSON 格式，字段名为中文
-4. **权限**：操作受飞书表格权限控制
+1. **安全提示**：Base Token 和 Table ID 是访问你表格的凭证，请勿泄露给他人
+2. **Record ID 获取**：列表命令输出的第一列 `_record_id`
+3. **中文编码**：确保 --data 参数中的中文正确传递
+4. **JSON 格式**：复杂数据用 JSON 格式，字段名为中文
+5. **权限**：操作受飞书表格权限控制
 
 ## 🆕 新建其他表格
 
 如需创建新的飞书多维表格：
 ```bash
 # 1. 创建 Base
-/opt/homebrew/lib/node_modules/@larksuite/cli/bin/lark-cli base create \
-  --name "表格名称"
+lark-cli base create --name "表格名称"
 
 # 2. 在 Base 中创建数据表
-/opt/homebrew/lib/node_modules/@larksuite/cli/bin/lark-cli base table-create \
-  --base-token <NEW_BASE_TOKEN> \
+lark-cli base table-create \
+  --base-token YOUR_BASE_TOKEN \
   --name "数据表名称"
 
 # 3. 获取 Table ID 后添加字段
-/opt/homebrew/lib/node_modules/@larksuite/cli/bin/lark-cli base field-create \
-  --base-token <NEW_BASE_TOKEN> \
-  --table-id <NEW_TABLE_ID> \
+lark-cli base field-create \
+  --base-token YOUR_BASE_TOKEN \
+  --table-id YOUR_TABLE_ID \
   --field-name "字段名" \
   --field-type text
 ```
